@@ -1,0 +1,13 @@
+INSERT INTO `sys_menu` (`parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`)
+    VALUES ('1', '${comments}', 'modules/${moduleName}/${pathName}.html', NULL, '1', 'fa fa-file-code-o', '6');
+
+set @parentId = @@identity;
+
+INSERT INTO `sys_menu` (`parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`)
+    SELECT @parentId, 'SELECT', null, '${moduleName}:${pathName}:list,${moduleName}:${pathName}:info', '2', null, '6';
+INSERT INTO `sys_menu` (`parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`)
+    SELECT @parentId, 'ADD', null, '${moduleName}:${pathName}:save', '2', null, '6';
+INSERT INTO `sys_menu` (`parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`)
+    SELECT @parentId, 'UPDATE', null, '${moduleName}:${pathName}:update', '2', null, '6';
+INSERT INTO `sys_menu` (`parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`)
+    SELECT @parentId, 'DELETE', null, '${moduleName}:${pathName}:delete', '2', null, '6';
