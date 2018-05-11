@@ -24,8 +24,8 @@
 	<div v-show="showList">
 		<div class="grid-btn">
 			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;更新</a>
-			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			<a class="btn btn-warning" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;更新</a>
+			<a class="btn btn-danger" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>
@@ -46,8 +46,8 @@
 		#end
 			<div class="form-group">
 				<div class="col-sm-2 control-label"></div> 
-				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="OK"/>
-				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="CANCLE"/>
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="取消"/>
 			</div>
 		</form>
 	</div>
