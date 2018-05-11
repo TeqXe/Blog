@@ -1,11 +1,8 @@
 package top.yuyg.blog.modules.sys.service.impl;
 
-import top.yuyg.blog.common.exception.RRException;
 import top.yuyg.blog.common.utils.Constant;
 import top.yuyg.blog.modules.sys.dao.SysUserDao;
 import top.yuyg.blog.modules.sys.entity.SysUserEntity;
-import top.yuyg.blog.modules.sys.service.SysRoleService;
-import top.yuyg.blog.modules.sys.service.SysUserRoleService;
 import top.yuyg.blog.modules.sys.service.SysUserService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -26,17 +23,6 @@ public class SysUserServiceImpl implements SysUserService {
 	@Autowired
 	private SysUserDao sysUserDao;
 	
-	@Autowired
-	private SysUserRoleService sysUserRoleService;
-	
-	@Autowired
-	private SysRoleService sysRoleService;
-
-	@Override
-	public List<String> queryAllPerms(Long userId) {
-		return sysUserDao.queryAllPerms(userId);
-	}
-
 	@Override
 	public List<Long> queryAllMenuId(Long userId) {
 		return sysUserDao.queryAllMenuId(userId);
@@ -71,7 +57,6 @@ public class SysUserServiceImpl implements SysUserService {
 		user.setSalt(salt);
 		sysUserDao.save(user);
 		checkRole(user);
-		sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
 	}
 
 	@Override
@@ -84,7 +69,6 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		sysUserDao.update(user);
 		checkRole(user);
-		sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
 	}
 
 	@Override
@@ -105,10 +89,6 @@ public class SysUserServiceImpl implements SysUserService {
 	private void checkRole(SysUserEntity user) {
 		if (user.getCreateUserId() == Constant.SUPER_ADMIN) {
 			return;
-		}
-		List<Long> roleIdList = sysRoleService.queryRoleIdList(user.getCreateUserId());
-		if (!roleIdList.containsAll(user.getRoleIdList())) {
-			throw new RRException("error");
 		}
 	}
 }

@@ -27,29 +27,6 @@ public class ShiroServiceImpl implements ShiroService {
 	private SysUserTokenDao sysUserTokenDao;
 
 	@Override
-	public Set<String> getUserPermissions(long userId) {
-		List<String> permsList;
-
-		if (userId == Constant.SUPER_ADMIN) {
-			List<SysMenuEntity> menuList = sysMenuDao.queryList(new HashMap<>());
-			permsList = new ArrayList<>(menuList.size());
-			for (SysMenuEntity menu : menuList) {
-				permsList.add(menu.getPerms());
-			}
-		} else {
-			permsList = sysUserDao.queryAllPerms(userId);
-		}
-		Set<String> permsSet = new HashSet<>();
-		for (String perms : permsList) {
-			if (StringUtils.isBlank(perms)) {
-				continue;
-			}
-			permsSet.addAll(Arrays.asList(perms.trim().split(",")));
-		}
-		return permsSet;
-	}
-
-	@Override
 	public SysUserTokenEntity queryByToken(String token) {
 		return sysUserTokenDao.queryByToken(token);
 	}

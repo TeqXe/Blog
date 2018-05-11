@@ -5,7 +5,6 @@ import top.yuyg.blog.modules.sys.service.SysLogService;
 import top.yuyg.blog.common.utils.PageUtils;
 import top.yuyg.blog.common.utils.Query;
 import top.yuyg.blog.common.utils.R;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class SysLogController {
 
 	@ResponseBody
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:log:list")
 	public R list(@RequestParam Map<String, Object> params) {
 		Query query = new Query(params);
 		List<SysLogEntity> sysLogList = sysLogService.queryList(query);

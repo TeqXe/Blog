@@ -9,8 +9,7 @@ import java.util.Map;
 @Mapper
 public interface SysUserDao extends BaseDao<SysUserEntity> {
 	
-	List<String> queryAllPerms(Long userId);
-	
+
 	List<Long> queryAllMenuId(Long userId);
 	
 	SysUserEntity queryByUserName(String username);

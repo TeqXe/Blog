@@ -27,5 +27,4 @@ public interface SysMenuService {
 
 	void deleteBatch(Long[] menuIds);
 
-	List<SysMenuEntity> queryUserList(Long userId);
 }

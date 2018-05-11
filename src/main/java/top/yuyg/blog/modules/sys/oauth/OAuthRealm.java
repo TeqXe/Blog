@@ -26,12 +26,7 @@ public class OAuthRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		SysUserEntity user = (SysUserEntity) principals.getPrimaryPrincipal();
-		Long userId = user.getUserId();
-		Set<String> permsSet = shiroService.getUserPermissions(userId);
-		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		info.setStringPermissions(permsSet);
-		return info;
+		return null;
 	}
 
 	@Override

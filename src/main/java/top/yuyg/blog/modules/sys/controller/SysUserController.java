@@ -10,10 +10,8 @@ import top.yuyg.blog.common.validator.ValidatorUtils;
 import top.yuyg.blog.common.validator.group.AddGroup;
 import top.yuyg.blog.common.validator.group.UpdateGroup;
 import top.yuyg.blog.modules.sys.entity.SysUserEntity;
-import top.yuyg.blog.modules.sys.service.SysUserRoleService;
 import top.yuyg.blog.modules.sys.service.SysUserService;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,11 +26,7 @@ public class SysUserController extends AbstractController {
 	@Autowired
 	private SysUserService sysUserService;
 
-	@Autowired
-	private SysUserRoleService sysUserRoleService;
-
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:user:list")
 	public R list(@RequestParam Map<String, Object> params) {
 		if (getUserId() != Constant.SUPER_ADMIN) {
 			params.put("createUserId", getUserId());
@@ -63,17 +57,13 @@ public class SysUserController extends AbstractController {
 	}
 
 	@RequestMapping("/info/{userId}")
-	@RequiresPermissions("sys:user:info")
 	public R info(@PathVariable("userId") Long userId) {
 		SysUserEntity user = sysUserService.queryObject(userId);
-		List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
-		user.setRoleIdList(roleIdList);
 		return R.ok().put("user", user);
 	}
 
 	@SysLog("saveSysUserEntity")
 	@RequestMapping("/save")
-	@RequiresPermissions("sys:user:save")
 	public R save(@RequestBody SysUserEntity user) {
 		ValidatorUtils.validateEntity(user, AddGroup.class);
 		user.setCreateUserId(getUserId());
@@ -83,7 +73,6 @@ public class SysUserController extends AbstractController {
 
 	@SysLog("updateSysUserEntity")
 	@RequestMapping("/update")
-	@RequiresPermissions("sys:user:update")
 	public R update(@RequestBody SysUserEntity user) {
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
 		user.setCreateUserId(getUserId());
@@ -93,7 +82,6 @@ public class SysUserController extends AbstractController {
 
 	@SysLog("deleteSysUserEntity")
 	@RequestMapping("/delete")
-	@RequiresPermissions("sys:user:delete")
 	public R delete(@RequestBody Long[] userIds) {
 		if (ArrayUtils.contains(userIds, 1L)) {
 			return R.error("can not delete admin");

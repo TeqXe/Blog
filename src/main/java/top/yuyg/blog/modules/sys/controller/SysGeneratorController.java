@@ -45,7 +45,7 @@ public class SysGeneratorController extends AbstractController {
 		tableNames = JSON.parseArray(tables).toArray(tableNames);
 		byte[] data = sysGeneratorService.generatorCode(tableNames);
 		response.reset();
-		response.setHeader("Content-Disposition", "attachment; filename=\"spsSrc.zip\"");
+		response.setHeader("Content-Disposition", "attachment; filename=\"代码生成.zip\"");
 		response.addHeader("Content-Length", "" + data.length);
 		response.setContentType("application/octet-stream; charset=UTF-8");
 		IOUtils.write(data, response.getOutputStream());

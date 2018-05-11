@@ -50,11 +50,8 @@ public class SysMenuServiceImpl implements SysMenuService {
 
 	@Override
 	public List<SysMenuEntity> getUserMenuList(Long userId) {
-		if (userId == Constant.SUPER_ADMIN) {
-			return getAllMenuList(null);
-		}
-		List<Long> menuIdList = sysUserService.queryAllMenuId(userId);
-		return getAllMenuList(menuIdList);
+		//去除权限系统
+		return getAllMenuList(null);
 	}
 
 	@Override
@@ -86,11 +83,6 @@ public class SysMenuServiceImpl implements SysMenuService {
 	@Transactional
 	public void deleteBatch(Long[] menuIds) {
 		sysMenuDao.deleteBatch(menuIds);
-	}
-
-	@Override
-	public List<SysMenuEntity> queryUserList(Long userId) {
-		return sysMenuDao.queryUserList(userId);
 	}
 
 	private List<SysMenuEntity> getAllMenuList(List<Long> menuIdList) {

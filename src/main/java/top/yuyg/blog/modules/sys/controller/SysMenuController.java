@@ -8,7 +8,6 @@ import top.yuyg.blog.modules.sys.entity.SysMenuEntity;
 import top.yuyg.blog.modules.sys.service.ShiroService;
 import top.yuyg.blog.modules.sys.service.SysMenuService;
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,19 +31,16 @@ public class SysMenuController extends AbstractController {
 	@RequestMapping("/nav")
 	public R nav() {
 		List<SysMenuEntity> menuList = sysMenuService.getUserMenuList(getUserId());
-		Set<String> permissions = shiroService.getUserPermissions(getUserId());
-		return R.ok().put("menuList", menuList).put("permissions", permissions);
+		return R.ok().put("menuList", menuList);
 	}
 
 	@RequestMapping("/list")
-	@RequiresPermissions("sys:menu:list")
 	public List<SysMenuEntity> list() {
 		List<SysMenuEntity> menuList = sysMenuService.queryList(new HashMap<String, Object>());
 		return menuList;
 	}
 
 	@RequestMapping("/select")
-	@RequiresPermissions("sys:menu:select")
 	public R select() {
 		List<SysMenuEntity> menuList = sysMenuService.queryNotButtonList();
 		SysMenuEntity root = new SysMenuEntity();
@@ -57,7 +53,6 @@ public class SysMenuController extends AbstractController {
 	}
 
 	@RequestMapping("/info/{menuId}")
-	@RequiresPermissions("sys:menu:info")
 	public R info(@PathVariable("menuId") Long menuId) {
 		SysMenuEntity menu = sysMenuService.queryObject(menuId);
 		return R.ok().put("menu", menu);
@@ -65,7 +60,6 @@ public class SysMenuController extends AbstractController {
 
 	@SysLog("saveSysMenuEntity")
 	@RequestMapping("/save")
-	@RequiresPermissions("sys:menu:save")
 	public R save(@RequestBody SysMenuEntity menu) {
 		verifyForm(menu);
 		sysMenuService.save(menu);
@@ -74,7 +68,6 @@ public class SysMenuController extends AbstractController {
 
 	@SysLog("updateSysMenuEntity")
 	@RequestMapping("/update")
-	@RequiresPermissions("sys:menu:update")
 	public R update(@RequestBody SysMenuEntity menu) {
 		verifyForm(menu);
 		sysMenuService.update(menu);
@@ -83,7 +76,6 @@ public class SysMenuController extends AbstractController {
 
 	@SysLog("deleteSysMenuEntity")
 	@RequestMapping("/delete")
-	@RequiresPermissions("sys:menu:delete")
 	public R delete(long menuId) {
 		List<SysMenuEntity> menuList = sysMenuService.queryListParentId(menuId);
 		if (menuList.size() > 0) {

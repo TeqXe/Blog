@@ -42,13 +42,6 @@ $.extend($.jgrid.defaults, {
     }
 });
 
-function hasPermission(permission) {
-    if (window.parent.permissions.indexOf(permission) > -1) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 window.alert = function(msg, callback){
 	parent.layer.alert(msg, function(index){

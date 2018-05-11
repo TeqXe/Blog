@@ -7,8 +7,6 @@ import java.util.Map;
 
 public interface SysUserService {
 
-	List<String> queryAllPerms(Long userId);
-
 	List<Long> queryAllMenuId(Long userId);
 
 	SysUserEntity queryByUserName(String username);

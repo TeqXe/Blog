@@ -43,7 +43,6 @@ var vm = new Vue({
 		getMenuList: function () {
 			$.getJSON(baseURL + "sys/menu/nav", function(r){
 				vm.menuList = r.menuList;
-                window.permissions = r.permissions;
 			});
 		},
 		getUser: function(){
@@ -55,11 +54,11 @@ var vm = new Vue({
 			layer.open({
 				type: 1,
 				skin: 'layui-layer-molv',
-				title: "UPDATE PASSWORD",
+				title: "修改密码",
 				area: ['550px', '270px'],
 				shadeClose: false,
 				content: jQuery("#passwordLayer"),
-				btn: ['UPDATE','CANCLE'],
+				btn: ['确认','取消'],
 				btn1: function (index) {
 					var data = "password="+vm.password+"&newPassword="+vm.newPassword;
 					$.ajax({
@@ -70,7 +69,7 @@ var vm = new Vue({
 					    success: function(r){
 							if(r.code == 0){
 								layer.close(index);
-								layer.alert('SUCCESS', function(){
+								layer.alert('修改密码成功', function(){
 									location.reload();
 								});
 							}else{

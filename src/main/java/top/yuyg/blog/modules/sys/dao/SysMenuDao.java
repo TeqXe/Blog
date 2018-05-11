@@ -12,5 +12,4 @@ public interface SysMenuDao extends BaseDao<SysMenuEntity> {
 	
 	List<SysMenuEntity> queryNotButtonList();
 	
-	List<SysMenuEntity> queryUserList(Long userId);
 }

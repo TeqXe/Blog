@@ -6,8 +6,6 @@ import top.yuyg.blog.modules.sys.entity.SysUserTokenEntity;
 import java.util.Set;
 
 public interface ShiroService {
-	
-	Set<String> getUserPermissions(long userId);
 
 	SysUserTokenEntity queryByToken(String token);
 
