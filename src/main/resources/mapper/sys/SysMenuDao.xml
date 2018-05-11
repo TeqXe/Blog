@@ -54,14 +54,6 @@
 		</if>
 	</select>
 	
-	<select id="queryUserList" resultType="top.yuyg.blog.modules.sys.entity.SysMenuEntity">
-		select distinct m.*,(select p.name from sys_menu p where p.menu_id = m.parent_id) as parentName
-			from sys_user_role ur 
-			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
-			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
-		where ur.user_id = #{userId} order by m.order_num asc
-	</select>
-	
 	<select id="queryTotal" resultType="int">
 		select count(*) from sys_menu
 	</select>

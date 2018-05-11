@@ -19,8 +19,6 @@ import top.yuyg.blog.modules.sys.service.SysUserService;
 public class SysMenuServiceImpl implements SysMenuService {
 	@Autowired
 	private SysMenuDao sysMenuDao;
-	@Autowired
-	private SysUserService sysUserService;
 
 	@Override
 	public List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {
