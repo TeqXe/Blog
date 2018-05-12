@@ -47,6 +47,17 @@
           <input type="password" class="form-control" v-model="password" placeholder="密码">
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
+      <div class="form-group">
+          <div class="row">
+              <div class="col-lg-8" style="padding-right: 0px">
+                  <input type="text" class="form-control" v-model="captcha" placeholder="验证码">
+              </div>
+              <div class="col-lg-4" style="padding-left: 0px">
+                  <img style="width:102px;height: 34px" title="看不清，脑壳疼" onclick="this.src='/blog_back/defaultKaptcha?d='+new Date()*1"
+                       src="/blog_back/defaultKaptcha"/>
+              </div>
+          </div>
+      </div>
       <div class="row">
         <div class="col-xs-8">
           <div class="checkbox icheck">
@@ -87,10 +98,13 @@
             }
         },
         methods: {
-            refreshCode: function(){
-                this.src = "captcha.jpg?t=" + $.now();
-            },
+            /*refreshCode: function(){
+                vm.captcha.src = "/blog_back/defaultKaptcha?d=" + $.now();
+            },*/
             login: function () {
+                if(vm.captcha.length == 0 ){
+                    vm.errorMsg = "验证码不可为空";
+                }
                 var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
                 $.ajax({
                     type: "POST",
@@ -104,7 +118,6 @@
                         }else{
                             vm.error = true;
                             vm.errorMsg = r.msg;
-                            vm.refreshCode();
                         }
                     }
                 });

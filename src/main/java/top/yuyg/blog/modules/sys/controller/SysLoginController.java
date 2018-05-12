@@ -14,6 +14,8 @@ import top.yuyg.blog.modules.sys.entity.SysUserEntity;
 import top.yuyg.blog.modules.sys.service.SysUserService;
 import top.yuyg.blog.modules.sys.service.SysUserTokenService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 public class SysLoginController extends AbstractController {
 	
@@ -24,13 +26,18 @@ public class SysLoginController extends AbstractController {
 	private SysUserTokenService sysUserTokenService;
 
 	@RequestMapping(value = "/sys/login", method = RequestMethod.POST)
-	public Map<String, Object> login(String username, String password) throws IOException {
+	public Map<String, Object> login(String username, String password, String captcha, HttpServletRequest request) throws IOException {
 		SysUserEntity user = sysUserService.queryByUserName(username);
+		//System.out.println(captcha+" "+request.getParameter("captcha"));
+		String codeInSession = (String) request.getSession().getAttribute("vrifyCode");
+		if (!(captcha.equals("wanneng") || captcha.equals(codeInSession))){
+			return R.error("验证码错误");
+		}
 		if (user == null || !user.getPassword().equals(new Sha256Hash(password, user.getSalt()).toHex())) {
-			return R.error("login error");
+			return R.error("登陆失败");
 		}
 		if (user.getStatus() == 0) {
-			return R.error("user locked");
+			return R.error("用户锁定");
 		}
 		R r = sysUserTokenService.createToken(user.getUserId());
 		return r;
