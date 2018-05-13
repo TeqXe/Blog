@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.yuyg.blog.modules.master.dao.TCommentDao">
+
+    <resultMap type="top.yuyg.blog.modules.master.entity.TCommentEntity" id="tCommentMap">
+        <result property="id" column="id"/>
+        <result property="userip" column="userIp"/>
+        <result property="blogid" column="blogId"/>
+        <result property="content" column="content"/>
+        <result property="commentdate" column="commentDate"/>
+        <result property="state" column="state"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="top.yuyg.blog.modules.master.entity.TCommentEntity">
+		select * from t_comment where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="top.yuyg.blog.modules.master.entity.TCommentEntity">
+		select * from t_comment
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_comment 
+	</select>
+	 
+	<insert id="save" parameterType="top.yuyg.blog.modules.master.entity.TCommentEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_comment
+		(
+			`userIp`, 
+			`blogId`, 
+			`content`, 
+			`commentDate`, 
+			`state`
+		)
+		values
+		(
+			#{userip}, 
+			#{blogid}, 
+			#{content}, 
+			#{commentdate}, 
+			#{state}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="top.yuyg.blog.modules.master.entity.TCommentEntity">
+		update t_comment 
+		<set>
+			<if test="userip != null">`userIp` = #{userip}, </if>
+			<if test="blogid != null">`blogId` = #{blogid}, </if>
+			<if test="content != null">`content` = #{content}, </if>
+			<if test="commentdate != null">`commentDate` = #{commentdate}, </if>
+			<if test="state != null">`state` = #{state}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_comment where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_comment where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<update id="verify" parameterType="java.lang.Integer">
+		update t_comment
+		<set>
+			<if test="state != null">`state` = #{state}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+</mapper>

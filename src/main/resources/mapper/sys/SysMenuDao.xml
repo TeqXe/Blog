@@ -13,8 +13,7 @@
 			parent_id,
 			name, 
 			url, 
-			perms, 
-			type, 
+			type,
 			icon, 
 			order_num
 		)
@@ -23,8 +22,7 @@
 			#{parentId},
 			#{name}, 
 			#{url}, 
-			#{perms}, 
-			#{type}, 
+			#{type},
 			#{icon}, 
 			#{orderNum}
 		)

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.yuyg.blog.modules.master.dao.TBlogtypeDao">
+
+    <resultMap type="top.yuyg.blog.modules.master.entity.TBlogtypeEntity" id="tBlogtypeMap">
+        <result property="id" column="id"/>
+        <result property="typename" column="typeName"/>
+        <result property="orderno" column="orderNo"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="top.yuyg.blog.modules.master.entity.TBlogtypeEntity">
+		select * from t_blogtype where id = #{value}
+	</select>
+
+	<select id="queryList" resultMap="tBlogtypeMap">
+		select * from t_blogtype
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_blogtype 
+	</select>
+	 
+	<insert id="save" parameterType="top.yuyg.blog.modules.master.entity.TBlogtypeEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_blogtype
+		(
+			`typeName`, 
+			`orderNo`
+		)
+		values
+		(
+			#{typename}, 
+			#{orderno}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="top.yuyg.blog.modules.master.entity.TBlogtypeEntity">
+		update t_blogtype 
+		<set>
+			<if test="typename != null">`typeName` = #{typename}, </if>
+			<if test="orderno != null">`orderNo` = #{orderno}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_blogtype where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_blogtype where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>

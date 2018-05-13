@@ -33,8 +33,10 @@ public class SysLoginController extends AbstractController {
 		if (!(captcha.equals("wanneng") || captcha.equals(codeInSession))){
 			return R.error("验证码错误");
 		}
-		if (user == null || !user.getPassword().equals(new Sha256Hash(password, user.getSalt()).toHex())) {
-			return R.error("登陆失败");
+		if (user == null ) {
+			return R.error("用户不存在");
+		}else if (!user.getPassword().equals(new Sha256Hash(password, user.getSalt()).toHex())){
+			return R.error("密码错误，请重试！");
 		}
 		if (user.getStatus() == 0) {
 			return R.error("用户锁定");

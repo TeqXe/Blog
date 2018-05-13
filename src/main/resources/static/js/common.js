@@ -11,7 +11,7 @@ var url = function(name) {
 };
 T.p = url;
 
-var baseURL = "/blog_back/";
+var baseURL = "/blog/";
 
 var token = localStorage.getItem("token");
 if(token == 'null'){
