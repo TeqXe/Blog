@@ -102,8 +102,18 @@
                 vm.captcha.src = "/blog_back/defaultKaptcha?d=" + $.now();
             },*/
             login: function () {
-                if(vm.captcha.length == 0 ){
+                if(vm.username.length == 0 ){
+                    vm.errorMsg = "用户名不可为空";
+                    vm.error = true;
+                    return;
+                }else if (vm.password.length == 0){
+                    vm.errorMsg = "密码不可为空";
+                    vm.error = true;
+                    return;
+                }else if(vm.captcha.length == 0){
                     vm.errorMsg = "验证码不可为空";
+                    vm.error = true;
+                    return;
                 }
                 var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
                 $.ajax({
