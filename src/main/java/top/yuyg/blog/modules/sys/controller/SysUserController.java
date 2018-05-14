@@ -28,9 +28,9 @@ public class SysUserController extends AbstractController {
 
 	@RequestMapping("/list")
 	public R list(@RequestParam Map<String, Object> params) {
-		if (getUserId() != Constant.SUPER_ADMIN) {
+		/*if (getUserId() != Constant.SUPER_ADMIN) {
 			params.put("createUserId", getUserId());
-		}
+		}*/
 		Query query = new Query(params);
 		List<SysUserEntity> userList = sysUserService.queryList(query);
 		int total = sysUserService.queryTotal(query);

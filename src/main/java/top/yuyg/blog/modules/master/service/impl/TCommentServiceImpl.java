@@ -56,4 +56,14 @@ public class TCommentServiceImpl implements TCommentService {
 	public void verify(@Param("id") Integer id,@Param("state") Integer state) {
 		tCommentDao.verify(id,state);
 	}
+
+	@Override
+	public void verifyPassBatch(Integer[] ids) {
+		tCommentDao.verifyPassBatch(ids);
+	}
+
+	@Override
+	public void verifyDenyBatch(Integer[] ids) {
+		tCommentDao.verifyDenyBatch(ids);
+	}
 }

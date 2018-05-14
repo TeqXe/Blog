@@ -30,4 +30,8 @@ public interface TCommentService {
 	void deleteBatch(Integer[] ids);
 
 	void verify(@Param("id") Integer id,@Param("state") Integer state);
+
+	void verifyPassBatch(Integer[] ids);
+
+	void verifyDenyBatch(Integer[] ids);
 }

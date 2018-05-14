@@ -3,19 +3,19 @@ $(function () {
         url: baseURL + 'sys/user/list',
         datatype: "json",
         colModel: [			
-			{ label: 'userId', name: 'userId', index: "user_id", width: 45, key: true },
-			{ label: 'username', name: 'username', width: 75 },
-			{ label: 'email', name: 'email', width: 90 },
-			{ label: 'mobile', name: 'mobile', width: 100 },
-			{ label: 'status', name: 'status', width: 80, formatter: function(value, options, row){
+			{ label: '用户ID', name: 'userId', index: "user_id", width: 45, key: true },
+			{ label: '用户名', name: 'username', width: 75 },
+			{ label: '邮箱', name: 'email', width: 90 },
+			{ label: '手机号', name: 'mobile', width: 100 },
+			{ label: '状态', name: 'status', width: 80, formatter: function(value, options, row){
 				return value === 0 ? 
 					'<span class="label label-danger">冻结</span>' :
 					'<span class="label label-success">正常</span>';
 			}},
-			{ label: 'createTime', name: 'createTime', index: "create_time", width: 80}
+			{ label: '创建时间', name: 'createTime', index: "create_time", width: 80}
         ],
 		viewrecords: true,
-        height: 685,
+        height: 520,
         rowNum: 10,
 		rowList : [10,30,50],
         rownumbers: true, 

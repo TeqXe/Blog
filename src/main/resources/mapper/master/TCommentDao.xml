@@ -18,6 +18,11 @@
 
 	<select id="queryList" resultType="top.yuyg.blog.modules.master.entity.TCommentEntity">
 		select * from t_comment
+		<where>
+			<if test="content != null and content.trim() != ''">
+				and content like concat('%',#{content},'%')
+			</if>
+		</where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -32,7 +37,12 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from t_comment 
+		select count(*) from t_comment
+		<where>
+			<if test="content != null and content.trim() != ''">
+				and content like concat('%',#{content},'%')
+			</if>
+		</where>
 	</select>
 	 
 	<insert id="save" parameterType="top.yuyg.blog.modules.master.entity.TCommentEntity" useGeneratedKeys="true" keyProperty="id">
@@ -83,6 +93,20 @@
 			<if test="state != null">`state` = #{state}</if>
 		</set>
 		where id = #{id}
+	</update>
+
+	<update id="verifyPassBatch">
+		update t_comment SET state = 1	where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+
+	<update id="verifyDenyBatch">
+		update t_comment SET state = 2	where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
 	</update>
 
 </mapper>

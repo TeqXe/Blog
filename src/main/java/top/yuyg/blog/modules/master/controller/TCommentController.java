@@ -4,11 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import top.yuyg.blog.modules.master.entity.TCommentEntity;
 import top.yuyg.blog.modules.master.service.TCommentService;
@@ -86,6 +82,28 @@ public class TCommentController {
 		int state = data[0];
 		int id = data[1];
 		tCommentService.verify(id,state);
+		return R.ok();
+	}
+
+	/**
+	 * 批量审核通过评论
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("/verifyPassBatch")
+	public R verifyPassBatch(@RequestBody Integer[] ids){
+		tCommentService.verifyPassBatch(ids);
+		return R.ok();
+	}
+
+	/**
+	 * 批量审核拒绝评论
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("/verifyDenyBatch")
+	public R verifyDenyBatch(@RequestBody Integer[] ids ){
+		tCommentService.verifyDenyBatch(ids);
 		return R.ok();
 	}
 }

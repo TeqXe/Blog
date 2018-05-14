@@ -15,6 +15,11 @@
 
 	<select id="queryList" resultMap="tBlogtypeMap">
 		select * from t_blogtype
+		<where>
+			<if test="typeName != null and typeName.trim() != ''">
+				  typeName LIKE concat('%',#{typeName},'%')
+			</if>
+		</where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
@@ -29,7 +34,12 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from t_blogtype 
+		select count(*) from t_blogtype
+		<where>
+			<if test="typeName != null and typeName.trim() != ''">
+				typeName LIKE concat('%',#{typeName},'%')
+			</if>
+		</where>
 	</select>
 	 
 	<insert id="save" parameterType="top.yuyg.blog.modules.master.entity.TBlogtypeEntity" useGeneratedKeys="true" keyProperty="id">

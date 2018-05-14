@@ -36,6 +36,9 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			typeName:null
+		},
 		showList: true,
 		title: null,
 		tBlogtype: {}
@@ -109,7 +112,8 @@ var vm = new Vue({
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
+				postData:{'typeName':vm.q.typeName},
                 page:page
             }).trigger("reloadGrid");
 		}
