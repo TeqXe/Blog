@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.yuyg.blog.modules.master.dao.TBlogDao">
+
+    <resultMap type="top.yuyg.blog.modules.master.entity.TBlogEntity" id="tBlogMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="summary" column="summary"/>
+        <result property="releasedate" column="releaseDate"/>
+        <result property="clickhit" column="clickHit"/>
+        <result property="replyhit" column="replyHit"/>
+        <result property="content" column="content"/>
+        <result property="typeid" column="typeId"/>
+        <result property="keyword" column="keyWord"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="top.yuyg.blog.modules.master.entity.TBlogEntity">
+		select * from t_blog where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="top.yuyg.blog.modules.master.entity.TBlogEntity">
+		select * from t_blog
+		<where>
+			<if test="summary != null and summary.trim() != ''">
+				summary LIKE concat('%',#{summary},'%')
+			</if>
+		</where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from t_blog
+		<where>
+			<if test="summary != null and summary.trim() != ''">
+				summary LIKE concat('%',#{summary},'%')
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="top.yuyg.blog.modules.master.entity.TBlogEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into t_blog
+		(
+			`title`, 
+			`summary`, 
+			`releaseDate`, 
+			`clickHit`, 
+			`replyHit`, 
+			`content`, 
+			`typeId`, 
+			`keyWord`
+		)
+		values
+		(
+			#{title}, 
+			#{summary}, 
+			#{releasedate}, 
+			#{clickhit}, 
+			#{replyhit}, 
+			#{content}, 
+			#{typeid}, 
+			#{keyword}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="top.yuyg.blog.modules.master.entity.TBlogEntity">
+		update t_blog 
+		<set>
+			<if test="title != null">`title` = #{title}, </if>
+			<if test="summary != null">`summary` = #{summary}, </if>
+			<if test="releasedate != null">`releaseDate` = #{releasedate}, </if>
+			<if test="clickhit != null">`clickHit` = #{clickhit}, </if>
+			<if test="replyhit != null">`replyHit` = #{replyhit}, </if>
+			<if test="content != null">`content` = #{content}, </if>
+			<if test="typeid != null">`typeId` = #{typeid}, </if>
+			<if test="keyword != null">`keyWord` = #{keyword}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from t_blog where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from t_blog where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
