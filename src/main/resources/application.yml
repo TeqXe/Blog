@@ -23,6 +23,8 @@ spring:
             enabled: true
     resources:
         static-locations: classpath:/static/,classpath:/views/
+    thymeleaf:
+      prefix: classpath:/templates/
 
 # Mybatis
 mybatis:

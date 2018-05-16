@@ -62,7 +62,7 @@ public class ShiroConfig {
             user:用户拦截器，用户已经身份验证/记住我登录的都可*/
         //defaultKaptcha为登陆页面的验证码，为避免被拦截，加上此行代码
         filterMap.put("/defaultKaptcha", "anon");
-        filterMap.put("/", "anon");
+        filterMap.put("/test", "anon");
         filterMap.put("/**", "oauth");
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
