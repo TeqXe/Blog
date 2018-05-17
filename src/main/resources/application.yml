@@ -23,6 +23,12 @@ spring:
             enabled: true
     resources:
         static-locations: classpath:/static/,classpath:/views/
+        chain.strategy.content.enabled: true
+    thymeleaf:
+        prefix: classpath:/templates/
+        suffix: .html
+        cache: false
+        servlet.content-type: text/html
 
 # Mybatis
 mybatis:
