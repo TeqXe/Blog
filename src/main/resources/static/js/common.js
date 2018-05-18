@@ -14,7 +14,7 @@ T.p = url;
 var baseURL = "/blog/";
 
 var token = localStorage.getItem("token");
-if(token == 'null'){
+if((token == 'null' || token == null) && parent.location.toString().indexOf("login")<0 ){
     parent.location.href = baseURL + 'login.html';
 }
 
